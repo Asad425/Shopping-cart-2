@@ -29,19 +29,19 @@
 
                 <div class="col-md-5 center-item">
                   <div class="input-group number-spinner">
-                    <button class="btn btn-default">
+                    <button  onclick="plusMinus('phone','-')" class="btn btn-default">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <input
+                    <input id="phone-count"
                       type="text"
                       class="form-control text-center"
                       value="1"
                     />
-                    <button class="btn btn-default">
+                    <button  onclick="plusMinus('phone','+')" class="btn btn-default">
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
-                  <h5>$1219</h5>
+                  <h5 id="phone-total">$1219</h5>
                   <img src="images/remove.png" alt="" class="remove-item" />
                 </div>
               </div>
@@ -55,15 +55,15 @@
                 </div>
                 <div class="col-md-5 center-item">
                   <div class="input-group number-spinner">
-                    <button onclick="plusMinus('-')" class="btn btn-default">
+                    <button onclick="plusMinus('case','-')" class="btn btn-default">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <input id="countValueCover"
+                    <input id="case-count"
                       type="text"
                       class="form-control text-center"
                       value="1"
                     />
-                    <button onclick="plusMinus('+')" class="btn btn-default">
+                    <button onclick="plusMinus('case','+')" class="btn btn-default">
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="col-md-4 status">
-                  <h5>$1,278</h5>
+                  <h5 id="sub-total">$1,278</h5>
                   <h5>$0</h5>
                   <h5>$1,278</h5>
                 </div>
@@ -102,24 +102,41 @@
        
   
      
-      function plusMinus(whichOne){
-         count=document.getElementById('countValueCover');
-         const countNumber=parseInt(count.value);
-         let caseNewCount
+      function plusMinus(product,whichOne){
+         countQuantity=document.getElementById(product+'-count');
+         const countNumber=parseInt(countQuantity.value);
+         let productNewCount=countNumber;
          if(whichOne=='+'){
-            newCaseCount=countNumber+1;
-            count.value = newCaseCount;
+            productNewCount=countNumber+1;
+            countQuantity.value = productNewCount;
          }
-         else if(whichOne=='-' && countNumber>0){
-            newCaseCount=countNumber-1;
-            count.value = newCaseCount;
+         if(whichOne=='-' && countNumber>0){
+            productNewCount=countNumber-1;
+            countQuantity.value = productNewCount;
+         }
+         let productTotal=0;
+         if(product=="phone"){
+            productTotal=productNewCount*1219;
+         }
+         if(product=="case"){
+            productTotal=productNewCount*59;
+         }  
+             document.getElementById(product+'-total').innerText='$'+productTotal;
+             calculateTotal();
+         }
+
+         function calculateTotal(){
+             const phoneQuantity=getInputValue('phone');
+             const caseQuantity=getInputValue('case');
+
+            const subTotal=(phoneQuantity*1219)+(caseQuantity*59);
+            document.getElementById('sub-total').innerText='$'+subTotal;
             
-
          }
-            const caseTotal=newCaseCount*59;
-            document.getElementById('case-total').innerText='$'+caseTotal;
-      }
-
+         function getInputValue(product){
+            const productCount=parseInt(document.getElementById(product+'-count').value);
+            return productCount;
+         }
     </script>
   </body>
 </html>
