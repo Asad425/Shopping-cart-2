@@ -18,7 +18,7 @@
   <body>
     <section>
       <div class="container">
-        <div class="cart">
+        <div id="shopping-cart" class="cart">
           <div class="col-md-12 col-lg-10 mx-auto">
             <div class="cart-item">
               <div class="row">
@@ -83,18 +83,22 @@
 
                 <div class="col-md-4 status">
                   <h5 id="sub-total">$1,278</h5>
-                  <h5>$0</h5>
-                  <h5>$1,278</h5>
+                  <h5 id="tax" >$0</h5>
+                  <h5 id="total-price">$1,278</h5>
                 </div>
               </div>
             </div>
             <div class="col-md-12 pt-4 pb-4">
-              <button type="button" class="btn btn-success check-out">
+              <button id="checkout" type="button" class="btn btn-success check-out">
                 Check Out
               </button>
             </div>
           </div>
         </div>
+      </div>
+
+      <div id="greeting-area">
+         <h1 class="text-center">THANK YOU FOR BEING WITH US!</h1>
       </div>
     </section>
 
@@ -131,12 +135,29 @@
 
             const subTotal=(phoneQuantity*1219)+(caseQuantity*59);
             document.getElementById('sub-total').innerText='$'+subTotal;
+
+            const tax=Math.round(subTotal*0.1);
+            document.getElementById('tax').innerText='$'+tax;
+
+            const totalPrice=subTotal+tax;
+            document.getElementById('total-price').innerText='$'+totalPrice;
+
+
             
          }
          function getInputValue(product){
             const productCount=parseInt(document.getElementById(product+'-count').value);
             return productCount;
          }
+   
+         const checkoutBtn=document.getElementById('checkout');
+            checkoutBtn.addEventListener('click',function(){
+            document.getElementById('shopping-cart').style.display='none';
+
+           const greetingArea= document.getElementById('greeting-area');
+           greetingArea.style.display='block';
+
+         });
     </script>
   </body>
 </html>
